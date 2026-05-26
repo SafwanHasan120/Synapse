@@ -1,0 +1,14 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(pnpm dev:api)",
+      "Bash(curl -s http://localhost:3001/health)",
+      "Bash(echo \"---EXIT:$?---\")",
+      "Bash(kill %1)",
+      "Bash(wait)",
+      "Bash(curl -s -o /dev/null -w \"%{http_code} %{redirect_url}\" http://localhost:3001/auth/github)",
+      "Bash(curl -s http://localhost:3001/auth/me)",
+      "Bash(curl -s -H \"Authorization: Bearer this.is.not.a.real.token\" http://localhost:3001/auth/me)"
+    ]
+  }
+}
