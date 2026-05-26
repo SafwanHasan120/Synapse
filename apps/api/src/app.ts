@@ -3,6 +3,7 @@ import cors           from 'cors';
 import { config }     from './config.js';
 import { httpLogger } from './middleware/logger.js';
 import { errorHandler } from './middleware/error.js';
+import { eventsRouter } from './routes/events.js';
 
 export function createApp(): Express {
   const app = express();
@@ -19,7 +20,7 @@ export function createApp(): Express {
 
   // Routes will be added here as you build them:
   // app.use('/auth',   authRouter);
-  // app.use('/events', eventsRouter);
+  app.use('/events', eventsRouter);
   // app.use('/search', searchRouter);
   // app.use('/teams',  teamsRouter);
 

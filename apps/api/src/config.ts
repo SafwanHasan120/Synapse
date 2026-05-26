@@ -1,4 +1,8 @@
+import { config as loadEnv } from 'dotenv';
+import { join } from 'path';
 import { z } from 'zod';
+
+loadEnv({ path: join(process.cwd(), '..', '..', '.env') });
 
 const schema = z.object({
   NODE_ENV:              z.enum(['development','production','test']).default('development'),

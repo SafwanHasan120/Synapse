@@ -12,6 +12,15 @@ const server = app.listen(config.PORT, () => {
   );
 });
 
+server.on('error', (err: unknown) => {
+  if (err instanceof Error && (err as NodeJS.ErrnoException).code === 'EADDRINUSE') {
+    logger.error({ port: config.PORT }, 'Port already in use: stop the existing server or change PORT');
+    process.exit(1);
+  }
+  logger.error({ err }, 'Server failed to start');
+  process.exit(1);
+});
+
 // Graceful shutdown — ECS sends SIGTERM before stopping the container
 async function shutdown(signal: string) {
   logger.info({ signal }, 'Shutting down...');
