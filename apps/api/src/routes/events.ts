@@ -7,3 +7,7 @@ export const eventsRouter: Router = express.Router();
 eventsRouter.get('/', requireAuth, (_req, res) => {
   res.json({ ok: true, message: 'Events endpoint reached' });
 });
+
+eventsRouter.post('/', requireAuth, (_req, res) => {
+  res.json({ ok: true, message: 'Event created' });
+});

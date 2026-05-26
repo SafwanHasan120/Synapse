@@ -207,6 +207,9 @@ importers:
 
   .:
     devDependencies:
+      '@types/node':
+        specifier: ^20.19.41
+        version: 20.19.41
       prettier:
         specifier: ^3.2.0
         version: 3.8.3
@@ -277,6 +280,9 @@ importers:
 
   packages/shared:
     devDependencies:
+      '@types/node':
+        specifier: ^20.19.41
+        version: 20.19.41
       typescript:
         specifier: ^5.4.0
         version: 5.9.3
