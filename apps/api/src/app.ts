@@ -4,6 +4,8 @@ import { config }       from './config.js';
 import { httpLogger }   from './middleware/logger.js';
 import { errorHandler } from './middleware/error.js';
 import { authRouter }   from './routes/auth.js';
+import { eventsRouter } from './routes/events.js';
+import { teamsRouter }  from './routes/teams.js';
 
 export function createApp(): Express {
   const app = express();
@@ -16,12 +18,12 @@ export function createApp(): Express {
     res.json({ ok: true, env: config.NODE_ENV });
   });
 
-  app.use('/auth', authRouter);
+  app.use('/auth',   authRouter);
+  app.use('/events', eventsRouter);
+  app.use('/teams',  teamsRouter);
 
-  // Remaining routes added in future steps:
-  // app.use('/events', eventsRouter);
+  // Future route:
   // app.use('/search', searchRouter);
-  // app.use('/teams',  teamsRouter);
 
   app.use(errorHandler);
 
