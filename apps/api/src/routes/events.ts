@@ -3,6 +3,7 @@ import { z }               from 'zod';
 import { requireAuth }     from '../middleware/auth.js';
 import { query, queryOne } from '../db/index.js';
 import { logger }          from '../middleware/logger.js';
+import { embedAndStore }   from '../services/embeddings.js';
 type RouterType = ReturnType<typeof Router>;
 
 export const eventsRouter: RouterType = Router();
@@ -51,9 +52,10 @@ eventsRouter.post('/', requireAuth, async (req, res, next) => {
       [body.projectId, userId, body.type, body.content, JSON.stringify(body.metadata)]
     );
 
-    // TODO: kick off background embedding once embeddings service is built
-    // embedAndStore(event!.id, body.projectId, body.content)
-    //   .catch(err => logger.error({ err, eventId: event!.id }, 'Embed failed'));
+    // Kick off embedding in the background — don't await
+    embedAndStore(event!.id, body.projectId, body.content).catch(
+      err => logger.error({ err, eventId: event!.id }, 'Embed failed')
+    );
 
     logger.debug({ eventId: event!.id, type: body.type, userId }, 'Event created');
 
