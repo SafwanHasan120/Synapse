@@ -1,6 +1,7 @@
 import OpenAI from 'openai';
 import { config } from '../config.js';
-import { query }  from '../db/index.js';
+import { query, queryOne } from '../db/index.js';
+import type { SearchResult, EventType, EventMetadata } from '@synapse/shared';
 import { logger } from '../middleware/logger.js';
 
 const openai = new OpenAI({ apiKey: config.OPENAI_API_KEY });
@@ -99,4 +100,64 @@ export async function embedAndStore(
       'Failed to embed and store event'
     );
   }
+}
+
+export async function semanticSearch(
+  projectId: string,
+  queryText: string,
+  limit: number
+): Promise<SearchResult[]> {
+  // Embed the search query — same model as stored chunks
+  const [queryEmbedding] = await getEmbeddings([queryText]);
+
+  if (!queryEmbedding) {
+    throw new Error('Failed to generate query embedding');
+  }
+
+  const vectorLiteral = `[${queryEmbedding.join(',')}]`;
+
+  const rows = await query<{
+    chunk_id:     string;
+    event_id:     string;
+    content:      string;
+    score:        number;
+    event_type:   string;
+    author_login: string;
+    author_name:  string;
+    metadata:     Record<string, unknown>;
+    created_at:   string;
+  }>(
+    `SELECT
+       mc.id                                    AS chunk_id,
+       mc.event_id,
+       mc.content,
+       1 - (mc.embedding <=> $1::vector)       AS score,
+       e.type                                   AS event_type,
+       u.login                                  AS author_login,
+       u.name                                   AS author_name,
+       e.metadata,
+       mc.created_at
+     FROM  memory_chunks mc
+     JOIN  events         e ON e.id  = mc.event_id
+     JOIN  users          u ON u.id  = e.user_id
+     WHERE mc.project_id = $2
+       AND 1 - (mc.embedding <=> $1::vector) > 0.5
+     ORDER BY mc.embedding <=> $1::vector
+     LIMIT $3`,
+    [vectorLiteral, projectId, limit]
+  );
+
+  return rows.map(r => ({
+    chunkId: r.chunk_id,
+    eventId: r.event_id,
+    content: r.content,
+    score:   Number(r.score),
+    metadata: {
+      ...(r.metadata as EventMetadata),
+      eventType:   r.event_type as EventType,
+      authorName:  r.author_name,
+      authorLogin: r.author_login,
+      createdAt:   r.created_at,
+    },
+  }));
 }
