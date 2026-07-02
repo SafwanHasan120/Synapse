@@ -6,14 +6,24 @@ import { pool } from './index.js';
 // Determine migrations path relative to project root (process.cwd()).
 const migrationsDir = join(process.cwd(), 'src', 'db', 'migrations');
 
+// All migrations run in order on a fresh schema
+const MIGRATIONS = [
+  '001_initial.sql',
+  '002_context_units.sql',
+];
+
 async function migrate(): Promise<void> {
   const client = await pool.connect();
   try {
-    const sqlPath = join(migrationsDir, '001_initial.sql');
-    const sql = readFileSync(sqlPath, 'utf8');
-    console.log('Running 001_initial.sql...');
-    await client.query(sql);
-    console.log('✓ Migration complete.');
+    for (const file of MIGRATIONS) {
+      const sql = readFileSync(
+        join(migrationsDir, file),
+        'utf8'
+      );
+      console.log(`Running ${file}...`);
+      await client.query(sql);
+      console.log(`✓ ${file} complete.`);
+    }
   } catch (err) {
     console.error('✗ Migration failed:', err);
     throw err;

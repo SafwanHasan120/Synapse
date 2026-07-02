@@ -4,7 +4,6 @@ import { config }       from './config.js';
 import { httpLogger }   from './middleware/logger.js';
 import { errorHandler } from './middleware/error.js';
 import { authRouter }   from './routes/auth.js';
-import { eventsRouter } from './routes/events.js';
 import { teamsRouter }  from './routes/teams.js';
 import { searchRouter } from './routes/search.js';
 
@@ -20,9 +19,11 @@ export function createApp(): Express {
   });
 
   app.use('/auth',   authRouter);
-  app.use('/events', eventsRouter);
   app.use('/teams',  teamsRouter);
   app.use('/search', searchRouter);
+
+  // Upcoming:
+  // app.use('/context-units', contextUnitsRouter);
 
   app.use(errorHandler);
 

@@ -25,7 +25,9 @@
       "PowerShell(docker exec synapse-postgres psql -U synapse -d synapse -tAc \"SELECT id, team_id FROM users WHERE id = 'e2883316-8fd0-44e6-8e11-188bd67c86fd';\")",
       "Bash(xargs grep -l \"JwtPayload\")",
       "Bash(curl -s -X POST http://localhost:3001/events -H 'Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJlMjg4MzMxNi04ZmQwLTQ0ZTYtOGUxMS0xODhiZDY3Yzg2ZmQiLCJ0ZWFtSWQiOiI4OTEyNmY5Mi1iZGMwLTQ5YTItYmMzMS0xNzJlMTg1Njk3MTYiLCJpYXQiOjE3ODAzNTI2MjksImV4cCI6MTc4MDk1NzQyOX0.UjVYFjwJ1_nVG6GTFwCT4Pims6ottKYKqy44XTpWeQQ' -H 'Content-Type: application/json' -d '{ *)",
-      "Bash(docker exec synapse-postgres psql -U synapse -d synapse -c ' *)"
+      "Bash(docker exec synapse-postgres psql -U synapse -d synapse -c ' *)",
+      "Bash(/Applications/Docker.app/Contents/Resources/bin/docker exec *)",
+      "Bash(pnpm db:migrate)"
     ]
   }
 }

@@ -83,19 +83,18 @@ teamsRouter.get('/projects/:projectId/stats', requireAuth, async (req, res, next
     }
 
     const stats = await queryOne<{
-      event_count:   string;
-      chunk_count:   string;
-      member_count:  string;
-      last_activity: string | null;
+      total_count:    string;
+      accepted_count: string;
+      pending_count:  string;
+      last_activity:  string | null;
     }>(
       `SELECT
-         COUNT(DISTINCT e.id)      AS event_count,
-         COUNT(DISTINCT mc.id)     AS chunk_count,
-         COUNT(DISTINCT e.user_id) AS member_count,
-         MAX(e.created_at)         AS last_activity
-       FROM  events e
-       LEFT  JOIN memory_chunks mc ON mc.event_id = e.id
-       WHERE e.project_id = $1`,
+         COUNT(*)                                        AS total_count,
+         COUNT(*) FILTER (WHERE state = 'accepted')     AS accepted_count,
+         COUNT(*) FILTER (WHERE state = 'proposed')     AS pending_count,
+         MAX(created_at)                                AS last_activity
+       FROM  context_units
+       WHERE project_id = $1`,
       [projectId]
     );
 
