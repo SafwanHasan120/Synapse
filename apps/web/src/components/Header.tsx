@@ -8,27 +8,27 @@ interface HeaderProps {
 
 export function Header({ teamName, activePath }: HeaderProps): JSX.Element {
   return (
-    <header className="border-b border-gray-800 bg-gray-950 px-6 py-4">
-      <div className="mx-auto flex max-w-5xl items-center justify-between">
+    <header className="border-b border-border bg-cream px-page-x py-4">
+      <div className="mx-auto flex max-w-content items-center justify-between">
         <div className="flex items-center gap-8">
-          <span className="text-sm font-semibold text-white">Synapse</span>
+          <span className="text-logo font-serif text-rust">Synapse</span>
           <nav className="flex gap-1">
             <Link
               href="/queue"
-              className={`rounded-md px-3 py-1.5 text-sm transition-colors ${
+              className={`px-3 py-1.5 text-ui transition-colors ${
                 activePath === '/queue'
-                  ? 'bg-gray-800 text-white'
-                  : 'text-gray-400 hover:text-white'
+                  ? 'border-b-2 border-rust text-rust'
+                  : 'text-warm hover:text-ink'
               }`}
             >
               Review queue
             </Link>
             <Link
               href="/knowledge"
-              className={`rounded-md px-3 py-1.5 text-sm transition-colors ${
+              className={`px-3 py-1.5 text-ui transition-colors ${
                 activePath === '/knowledge'
-                  ? 'bg-gray-800 text-white'
-                  : 'text-gray-400 hover:text-white'
+                  ? 'border-b-2 border-rust text-rust'
+                  : 'text-warm hover:text-ink'
               }`}
             >
               Knowledge base
@@ -36,11 +36,11 @@ export function Header({ teamName, activePath }: HeaderProps): JSX.Element {
           </nav>
         </div>
         <div className="flex items-center gap-4">
-          <span className="text-xs text-gray-500">{teamName}</span>
+          <span className="text-meta text-muted">{teamName}</span>
           <form action="/auth/logout" method="post">
             <button
               type="submit"
-              className="text-xs text-gray-500 transition-colors hover:text-gray-300"
+              className="text-meta text-muted transition-colors hover:text-warm"
             >
               Sign out
             </button>

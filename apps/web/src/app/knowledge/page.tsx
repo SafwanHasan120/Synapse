@@ -11,10 +11,10 @@ function KnowledgeCard({ unit }: { unit: KnowledgeItem }): JSX.Element {
       : (unit.author_login ?? 'unknown');
 
   return (
-    <div className="rounded-lg border border-gray-800 bg-gray-900 p-5 space-y-3">
-      <p className="text-sm leading-relaxed text-gray-100">{unit.content}</p>
-      <div className="flex flex-wrap items-center gap-2 text-xs text-gray-500">
-        <span className="rounded bg-gray-800 px-2 py-0.5 text-gray-400">
+    <div className="card space-y-3">
+      <p className="text-body leading-relaxed text-ink">{unit.content}</p>
+      <div className="flex flex-wrap items-center gap-2 text-meta text-warm">
+        <span className="rounded bg-border px-2 py-0.5 text-warm">
           {unit.scope}
         </span>
         <span>
@@ -24,7 +24,7 @@ function KnowledgeCard({ unit }: { unit: KnowledgeItem }): JSX.Element {
         {unit.tags.map(tag => (
           <span
             key={tag}
-            className="rounded bg-gray-800 px-1.5 py-0.5 text-gray-400"
+            className={unit.author_type === 'agent' ? 'tag-agent' : 'tag'}
           >
             {tag}
           </span>
@@ -48,8 +48,8 @@ export default async function KnowledgePage(): Promise<JSX.Element> {
     return (
       <>
         <Header teamName={teamData.team.name} activePath="/knowledge" />
-        <main className="mx-auto max-w-5xl px-6 py-12 text-center">
-          <p className="text-sm text-gray-400">No projects yet.</p>
+        <main className="mx-auto max-w-content px-page-x py-page-y text-center">
+          <p className="text-body text-warm">No projects yet.</p>
         </main>
       </>
     );
@@ -63,22 +63,22 @@ export default async function KnowledgePage(): Promise<JSX.Element> {
   return (
     <>
       <Header teamName={teamData.team.name} activePath="/knowledge" />
-      <main className="mx-auto max-w-5xl px-6 py-8">
+      <main className="mx-auto max-w-content px-page-x py-page-y">
         <div className="mb-6 flex items-baseline justify-between">
-          <h1 className="text-lg font-semibold text-white">Knowledge base</h1>
-          <div className="flex gap-4 text-sm text-gray-500">
+          <h1 className="text-section-heading font-serif text-ink">Knowledge base</h1>
+          <div className="flex gap-4 text-meta text-muted">
             <span>{stats.accepted_count} accepted</span>
             <span>{stats.pending_count} pending review</span>
           </div>
         </div>
         {knowledge.length === 0 ? (
-          <div className="rounded-lg border border-gray-800 bg-gray-900 p-12 text-center">
-            <p className="text-sm text-gray-500">
+          <div className="card p-12 text-center">
+            <p className="italic text-body text-muted">
               No approved context yet. Approve proposals from the review queue.
             </p>
           </div>
         ) : (
-          <div className="space-y-4">
+          <div className="space-y-card-gap">
             {knowledge.map(unit => (
               <KnowledgeCard key={unit.id} unit={unit} />
             ))}

@@ -29,5 +29,8 @@
       "Bash(/Applications/Docker.app/Contents/Resources/bin/docker exec *)",
       "Bash(pnpm db:migrate)"
     ]
+  },
+  "enabledPlugins": {
+    "impeccable@impeccable": true
   }
 }

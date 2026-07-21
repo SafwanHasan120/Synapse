@@ -18,8 +18,8 @@ export default async function QueuePage(): Promise<JSX.Element> {
     return (
       <>
         <Header teamName={teamData.team.name} activePath="/queue" />
-        <main className="mx-auto max-w-5xl px-6 py-12 text-center">
-          <p className="text-sm text-gray-400">
+        <main className="mx-auto max-w-content px-page-x py-page-y text-center">
+          <p className="text-body text-warm">
             No projects yet. Create one via the API first.
           </p>
         </main>
@@ -32,19 +32,19 @@ export default async function QueuePage(): Promise<JSX.Element> {
   return (
     <>
       <Header teamName={teamData.team.name} activePath="/queue" />
-      <main className="mx-auto max-w-5xl px-6 py-8">
+      <main className="mx-auto max-w-content px-page-x py-page-y">
         <div className="mb-6 flex items-baseline justify-between">
-          <h1 className="text-lg font-semibold text-white">Review queue</h1>
-          <span className="text-sm text-gray-500">{queue.length} pending</span>
+          <h1 className="text-section-heading font-serif text-ink">Review queue</h1>
+          <span className="text-meta text-muted">{queue.length} pending</span>
         </div>
         {queue.length === 0 ? (
-          <div className="rounded-lg border border-gray-800 bg-gray-900 p-12 text-center">
-            <p className="text-sm text-gray-500">
+          <div className="card p-12 text-center">
+            <p className="italic text-body text-muted">
               All caught up. No proposals awaiting review.
             </p>
           </div>
         ) : (
-          <div className="space-y-4">
+          <div className="space-y-card-gap">
             {queue.map(unit => (
               <ReviewCard key={unit.id} unit={unit} />
             ))}

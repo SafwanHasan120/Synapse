@@ -23,8 +23,8 @@ export function ReviewCard({ unit }: { unit: QueueItem }): JSX.Element {
 
   if (done) {
     return (
-      <div className="rounded-lg border border-gray-800 bg-gray-900 p-4 opacity-40">
-        <p className="text-sm text-gray-500">Reviewed ✓</p>
+      <div className="card opacity-60">
+        <p className="italic text-meta text-muted">Reviewed ✓</p>
       </div>
     );
   }
@@ -35,15 +35,15 @@ export function ReviewCard({ unit }: { unit: QueueItem }): JSX.Element {
       : (unit.author_login ?? 'unknown');
 
   return (
-    <div className="rounded-lg border border-gray-800 bg-gray-900 p-5 space-y-4">
+    <div className="card space-y-4">
       <div className="flex items-start justify-between gap-4">
-        <p className="flex-1 text-sm leading-relaxed text-gray-100">{unit.content}</p>
-        <span className="shrink-0 rounded-full bg-gray-800 px-2 py-0.5 text-xs text-gray-400">
+        <p className="flex-1 text-body leading-relaxed text-ink">{unit.content}</p>
+        <span className="shrink-0 rounded-full bg-border px-3 py-1 text-meta text-warm">
           {unit.scope}
         </span>
       </div>
 
-      <div className="flex flex-wrap items-center gap-2 text-xs text-gray-500">
+      <div className="flex flex-wrap items-center gap-2 text-meta text-warm">
         <span>
           {unit.author_type === 'agent' ? '🤖' : '👤'} {authorLabel}
         </span>
@@ -52,7 +52,7 @@ export function ReviewCard({ unit }: { unit: QueueItem }): JSX.Element {
         {unit.tags.map(tag => (
           <span
             key={tag}
-            className="rounded bg-gray-800 px-1.5 py-0.5 text-gray-400"
+            className={unit.author_type === 'agent' ? 'tag-agent' : 'tag'}
           >
             {tag}
           </span>
@@ -60,7 +60,7 @@ export function ReviewCard({ unit }: { unit: QueueItem }): JSX.Element {
       </div>
 
       {error != null && (
-        <p className="text-xs text-red-400">{error}</p>
+        <p className="text-meta text-rust">{error}</p>
       )}
 
       <div className="flex gap-2">
@@ -68,7 +68,7 @@ export function ReviewCard({ unit }: { unit: QueueItem }): JSX.Element {
           type="button"
           onClick={() => handle('approved')}
           disabled={isPending}
-          className="rounded-md bg-emerald-700 px-4 py-1.5 text-sm font-medium text-white transition-colors hover:bg-emerald-600 disabled:opacity-50"
+          className="btn-approve"
         >
           Approve
         </button>
@@ -76,7 +76,7 @@ export function ReviewCard({ unit }: { unit: QueueItem }): JSX.Element {
           type="button"
           onClick={() => handle('rejected')}
           disabled={isPending}
-          className="rounded-md bg-gray-800 px-4 py-1.5 text-sm font-medium text-gray-300 transition-colors hover:bg-gray-700 disabled:opacity-50"
+          className="btn-reject"
         >
           Reject
         </button>

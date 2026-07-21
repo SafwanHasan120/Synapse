@@ -1,0 +1,10 @@
+{
+  "framework": "next",
+  "port": 3000,
+  "files": ["src/app/**/*.tsx"],
+  "insertBefore": "</body>",
+  "commentSyntax": "//",
+  "cspChecked": true,
+  "cspStatus": "none",
+  "cspNote": "No Content Security Policy detected. Live mode can inject freely."
+}

@@ -1,3 +1,92 @@
+@import url('https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=Inter:wght@400;500&display=swap');
+
+:root {
+  --color-cream: #F2E8DC;
+  --color-surface: #EDE0D0;
+  --color-border: #D9C9B5;
+  --color-rust: #7D3A2C;
+  --color-rust-dark: #6A2E22;
+  --color-brown: #B87550;
+  --color-sand: #D4A472;
+  --color-ink: #1C1208;
+  --color-warm: #7A6355;
+  --color-muted: #A8927E;
+  --color-sage: #5C7A52;
+}
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+@layer base {
+  html {
+    @apply antialiased;
+  }
+
+  html, body {
+    background-color: var(--color-cream);
+    color: var(--color-ink);
+  }
+
+  body {
+    @apply min-h-screen font-sans;
+  }
+
+  h1, h2, h3 {
+    @apply font-serif;
+  }
+
+  h1 {
+    @apply text-page-heading;
+  }
+
+  h2 {
+    @apply text-section-heading;
+  }
+
+  h3 {
+    @apply text-lg;
+  }
+
+  p {
+    @apply text-body;
+  }
+
+  a {
+    @apply text-rust transition-colors hover:text-rust-dark;
+  }
+}
+
+@layer components {
+  .btn-primary {
+    @apply inline-flex items-center justify-center rounded-md bg-rust px-4 py-3 text-ui font-sans font-medium text-cream transition-colors hover:bg-rust-dark disabled:opacity-50;
+  }
+
+  .btn-secondary {
+    @apply inline-flex items-center justify-center rounded-md border border-border bg-transparent px-4 py-3 text-ui font-sans font-medium text-warm transition-colors hover:bg-surface disabled:opacity-50;
+  }
+
+  .btn-approve {
+    @apply inline-flex items-center justify-center rounded-md bg-sage px-4 py-2 text-ui font-sans font-medium text-cream transition-colors hover:bg-opacity-90 disabled:opacity-50;
+  }
+
+  .btn-reject {
+    @apply inline-flex items-center justify-center rounded-md border border-border bg-transparent px-4 py-2 text-ui font-sans font-medium text-warm transition-colors hover:bg-surface disabled:opacity-50;
+  }
+
+  .card {
+    @apply rounded-lg border border-border bg-surface p-5;
+  }
+
+  .tag {
+    @apply inline-block rounded bg-border px-2.5 py-1 text-meta text-warm;
+  }
+
+  .tag-agent {
+    @apply inline-block rounded bg-sand/30 px-2.5 py-1 text-meta text-rust;
+  }
+
+  .input-base {
+    @apply rounded-md border border-border bg-cream px-3 py-2 text-body text-ink placeholder-muted transition-colors focus:border-rust focus:outline-none;
+  }
+}

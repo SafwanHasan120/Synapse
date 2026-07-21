@@ -13,8 +13,8 @@ export default function RootLayout({
   children: React.ReactNode;
 }): JSX.Element {
   return (
-    <html lang="en" className="bg-gray-950 text-gray-100">
-      <body className="min-h-screen antialiased">{children}</body>
+    <html lang="en">
+      <body>{children}</body>
     </html>
   );
 }
