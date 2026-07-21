@@ -1,0 +1,6 @@
+{
+  "/page": "app/page.js",
+  "/knowledge/page": "app/knowledge/page.js",
+  "/queue/page": "app/queue/page.js",
+  "/auth/success/route": "app/auth/success/route.js"
+}
